@@ -22,7 +22,10 @@
 .\" not be used in advertising or otherwise to promote the sale, use or
 .\" other dealings in this Software without prior written authorization
 .\" from The Open Group.
-.TH XCLIPBOARD 1 "Release 6.4" "X Version 11"
+.\"
+.\" $XFree86: xc/programs/xclipboard/xclipboard.man,v 1.9 2002/10/12 16:06:46 herrb Exp $
+.\"
+.TH XCLIPBOARD 1 __xorgversion__
 .SH NAME
 xclipboard \- X clipboard client
 .SH SYNOPSIS
@@ -127,7 +130,7 @@ file to use the clipboard are:
 .fi
 .sp
 .SH "SEE ALSO"
-X(1), xcutsel(1), xterm(1), individual client documentation for how to make a 
+X(__miscmansuffix__), xcutsel(1), xterm(1), individual client documentation for how to make a 
 selection and send it to the CLIPBOARD.
 .SH ENVIRONMENT
 .PP
@@ -139,7 +142,9 @@ to get the default host and display number.
 to get the name of a resource file that overrides the global resources
 stored in the RESOURCE_MANAGER property.
 .SH FILES
-<XRoot>/lib/X11/app-defaults/XClipboard - specifies required resources
+.TP
+.I __apploaddir__/XClipboard
+specifies required resources
 .SH AUTHOR
 Ralph R. Swick, DEC/MIT Project Athena
 .br

@@ -22,7 +22,10 @@
 .\" not be used in advertising or otherwise to promote the sale, use or
 .\" other dealings in this Software without prior written authorization
 .\" from The Open Group.
-.TH XCUTSEL 1 "Release 6.4" "X Version 11"
+.\"
+.\" $XFree86: xc/programs/xclipboard/xcutsel.man,v 1.8 2001/12/14 20:01:16 dawes Exp $
+.\"
+.TH XCUTSEL 1 __xorgversion__
 .SH NAME
 xcutsel - interchange between cut buffer and selection
 .SH SYNOPSIS
@@ -96,7 +99,7 @@ This is the ``copy BUFFER to SELECTION'' button.
 .B "quit (\fPclass\fB Command)"
 This is the ``quit'' button.
 .SH "SEE ALSO"
-X(1), xclipboard(1), xterm(1), text widget documentation, individual client 
+X(__miscmansuffix__), xclipboard(1), xterm(1), text widget documentation, individual client 
 documentation for how to make a selection.
 .SH BUGS
 There is no way to change the name of the selection or the number of the
