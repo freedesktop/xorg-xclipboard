@@ -26,8 +26,10 @@ in this Software without prior written authorization from The Open Group.
  * *
  * Author:  Ralph Swick, DEC/Project Athena
  */
+/* $XFree86: xc/programs/xclipboard/xcutsel.c,v 1.8 2001/12/14 20:01:16 dawes Exp $ */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <X11/Intrinsic.h>
 #include <X11/StringDefs.h>
 #include <X11/Xatom.h>
@@ -80,8 +82,8 @@ typedef struct {
 
 static ButtonState state;
 
-Syntax(call)
-	char *call;
+static void
+Syntax(char *call)
 {
     fprintf (stderr, "usage:  %s [-selection name] [-cutbuffer number]\n", 
 	     call);
@@ -89,13 +91,9 @@ Syntax(call)
 }
 
 
-static void StoreBuffer(w, client_data, selection, type, value, length, format)
-    Widget w;
-    XtPointer client_data;
-    Atom *selection, *type;
-    XtPointer value;
-    unsigned long *length;
-    int *format;
+static void 
+StoreBuffer(Widget w, XtPointer client_data, Atom *selection, Atom *type, 
+	    XtPointer value, unsigned long *length, int *format)
 {
 
     if (*type == 0 || *type == XT_CONVERT_FAIL || *length == 0) {
@@ -114,13 +112,10 @@ static void StoreBuffer(w, client_data, selection, type, value, length, format)
 }
 
 
-static Boolean ConvertSelection(w, selection, target,
-				type, value, length, format)
-    Widget w;
-    Atom *selection, *target, *type;
-    XtPointer *value;
-    unsigned long *length;
-    int *format;
+static Boolean 
+ConvertSelection(Widget w, Atom *selection, Atom *target,
+		 Atom *type, XtPointer *value, unsigned long *length, 
+		 int *format)
 {
     Display* d = XtDisplay(w);
     XSelectionRequestEvent* req =
@@ -131,7 +126,8 @@ static Boolean ConvertSelection(w, selection, target,
 	Atom* std_targets;
 	unsigned long std_length;
 	XmuConvertStandardSelection(w, req->time, selection, target, type,
-				   (XPointer*)&std_targets, &std_length, format);
+				    (XPointer*)&std_targets, &std_length,
+				    format);
 	*value = XtMalloc(sizeof(Atom)*(std_length + 4));
 	targetP = *(Atom**)value;
 	*length = std_length + 4;
@@ -195,9 +191,8 @@ static Boolean ConvertSelection(w, selection, target,
 }
 
 
-static void SetButton(state, on)
-    ButtonState *state;
-    Boolean on;
+static void 
+SetButton(ButtonState *state, Boolean on)
 {
     if (state->is_on != on) {
 	Arg args[2];
@@ -213,9 +208,8 @@ static void SetButton(state, on)
 }
 
 
-static void LoseSelection(w, selection)
-    Widget w;
-    Atom *selection;
+static void 
+LoseSelection(Widget w, Atom *selection)
 {
     if (options.value) {
 	XFree( options.value );
@@ -226,10 +220,8 @@ static void LoseSelection(w, selection)
 
 
 /* ARGSUSED */
-static void Quit(w, closure, callData)
-    Widget w;
-    XtPointer closure;		/* unused */
-    XtPointer callData;		/* unused */
+static void 
+Quit(Widget w, XtPointer closure, XtPointer callData)
 {
     XtCloseDisplay( XtDisplay(w) );
     exit(0);
@@ -237,10 +229,8 @@ static void Quit(w, closure, callData)
 
 
 /* ARGSUSED */
-static void GetSelection(w, closure, callData)
-    Widget w;
-    XtPointer closure;		/* unused */
-    XtPointer callData;		/* unused */
+static void 
+GetSelection(Widget w, XtPointer closure, XtPointer callData)
 {
     XtGetSelectionValue(w, options.selection, XA_STRING,
 			StoreBuffer, NULL,
@@ -249,10 +239,8 @@ static void GetSelection(w, closure, callData)
 
 
 /* ARGSUSED */
-static void GetBuffer(w, closure, callData)
-    Widget w;
-    XtPointer closure;
-    XtPointer callData;		/* unused */
+static void 
+GetBuffer(Widget w, XtPointer closure, XtPointer callData)
 {
     if (options.value) XFree( options.value );
     options.value =
@@ -266,9 +254,8 @@ static void GetBuffer(w, closure, callData)
 }
 
 
-void main(argc, argv)
-    int argc;
-    char *argv[];
+int 
+main(int argc, char *argv[])
 {
     char label[100];
     Widget box, button;
@@ -322,4 +309,5 @@ void main(argc, argv)
    
     XtRealizeWidget(shell);
     XtAppMainLoop(appcon);
+    exit(0);
 }
