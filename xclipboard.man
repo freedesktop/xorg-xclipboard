@@ -23,7 +23,7 @@
 .\" other dealings in this Software without prior written authorization
 .\" from The Open Group.
 .\"
-.\" $XFree86$
+.\" $XFree86: xc/programs/xclipboard/xclipboard.man,v 1.9 2002/10/12 16:06:46 herrb Exp $
 .\"
 .TH XCLIPBOARD 1 __xorgversion__
 .SH NAME
