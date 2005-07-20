@@ -23,16 +23,16 @@ bin_PROGRAMS = xclipboard xcutsel
 
 # xclipboard
 
-xclipboard_CFLAGS = $(DEP_CFLAGS)
-xclipboard_LDADD = $(DEP_LIBS)
+xclipboard_CFLAGS = $(XCLIPBOARD_CFLAGS)
+xclipboard_LDADD = $(XCLIPBOARD_LIBS)
 
 xclipboard_SOURCES =	\
         xclipboard.c
 
 # xcutsel
 
-xcutsel_CFLAGS = $(DEP_CFLAGS)
-xcutsel_LDADD = $(DEP_LIBS)
+xcutsel_CFLAGS = $(XCLIPBOARD_CFLAGS)
+xcutsel_LDADD = $(XCLIPBOARD_LIBS)
 
 xcutsel_SOURCES =	\
         xcutsel.c
