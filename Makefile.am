@@ -39,7 +39,7 @@ xcutsel_SOURCES =	\
 
 # man pages
 
-dist_man_MANS = \
+dist_man1_MANS = \
         xclipboard.man \
         xcutsel.man
 
