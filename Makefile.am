@@ -21,9 +21,10 @@
 
 bin_PROGRAMS = xclipboard xcutsel
 
+AM_CFLAGS = $(XCLIPBOARD_CFLAGS)
+
 # xclipboard
 
-xclipboard_CFLAGS = $(XCLIPBOARD_CFLAGS)
 xclipboard_LDADD = $(XCLIPBOARD_LIBS)
 
 xclipboard_SOURCES =	\
@@ -31,7 +32,6 @@ xclipboard_SOURCES =	\
 
 # xcutsel
 
-xcutsel_CFLAGS = $(XCLIPBOARD_CFLAGS)
 xcutsel_LDADD = $(XCLIPBOARD_LIBS)
 
 xcutsel_SOURCES =	\
