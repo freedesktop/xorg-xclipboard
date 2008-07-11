@@ -27,6 +27,7 @@ in this Software without prior written authorization from The Open Group.
  * Author:  Ralph Swick, DEC/Project Athena
  * Updated for R4:  Chris D. Peterson,  MIT X Consortium.
  * Reauthored by: Keith Packard, MIT X Consortium.
+ * Added UTF-8 support: Stanislav Maslovski <stanislav.maslovski@gmail.com>
  */
 /* $XFree86: xc/programs/xclipboard/xclipboard.c,v 1.8tsi Exp $ */
 
@@ -70,6 +71,7 @@ typedef struct _Clip {
 
 static Atom wm_delete_window;
 static Atom wm_protocols;
+static Atom UTF8_STRING;
 
 static void EraseTextWidget ( void );
 static void NewCurrentClipContents ( char *data, int len );
@@ -477,6 +479,19 @@ InsertClipboard(Widget w, XtPointer client_data, Atom *selection,
     XFree(value);
 }
 
+static void
+InsertClipboardUtf8(Widget w, XtPointer client_data, Atom *selection,
+		Atom *type, XtPointer value, unsigned long *length,
+		int *format)
+{
+    if (*type == XT_CONVERT_FAIL)
+	XtGetSelectionValue(w, *selection, XA_STRING, InsertClipboard,
+			    NULL, CurrentTime);
+    else
+	InsertClipboard(w, client_data, selection, type,
+			value, length, format);
+}
+
 static Boolean 
 ConvertSelection(Widget w, Atom *selection, Atom *target,
 		 Atom *type, XtPointer *value, unsigned long *length, 
@@ -493,8 +508,9 @@ ConvertSelection(Widget w, Atom *selection, Atom *target,
 	XmuConvertStandardSelection(w, req->time, selection, target, type,
 				    (XPointer*)&std_targets, &std_length,
 				    format);
-	*value = XtMalloc(sizeof(Atom)*(std_length + 5));
+	*value = XtMalloc(sizeof(Atom)*(std_length + 6));
 	targetP = *(Atom**)value;
+	*targetP++ = UTF8_STRING;
 	*targetP++ = XA_STRING;
 	*targetP++ = XA_TEXT(d);
 	*targetP++ = XA_LENGTH(d);
@@ -554,6 +570,23 @@ ConvertSelection(Widget w, Atom *selection, Atom *target,
     	return True;
     }
     
+    if (*target == UTF8_STRING)
+    {
+	Arg args[1];
+	Widget source;
+	char *data;
+
+	source = XawTextGetSource (text);
+	XtSetArg (args[0], XtNstring, &data);
+	XtGetValues (source, args, 1);
+	*length = strlen (data);
+	*value = XtMalloc (*length + 1);
+	strcpy(*value, data);
+	*type = UTF8_STRING;
+	*format = 8;
+	return True;
+    }
+
     if (XmuConvertStandardSelection(w, req->time, selection, target, type,
 				    (XPointer *) value, length, format))
 	return True;
@@ -564,7 +597,7 @@ ConvertSelection(Widget w, Atom *selection, Atom *target,
 static void 
 LoseSelection(Widget w, Atom *selection)
 {
-    XtGetSelectionValue(w, *selection, XA_STRING, InsertClipboard,
+    XtGetSelectionValue(w, *selection, UTF8_STRING, InsertClipboardUtf8,
 			NULL, CurrentTime);
 }
 
@@ -620,6 +653,7 @@ main(int argc, char *argv[])
     /* CLIPBOARD_MANAGER is a non-standard mechanism */
     ManagerAtom = XInternAtom(XtDisplay(top), "CLIPBOARD_MANAGER", False);
     ClipboardAtom = XA_CLIPBOARD(XtDisplay(top));
+    UTF8_STRING = XInternAtom(XtDisplay(top), "UTF8_STRING", False);
     if (XGetSelectionOwner(XtDisplay(top), ManagerAtom))
 	XtError("another clipboard is already running\n");
 
