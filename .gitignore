@@ -21,3 +21,7 @@ xclipboard.1
 xcutsel
 xcutsel.1
 *~
+*.o
+xclipboard-*.tar.*
+ChangeLog
+tags

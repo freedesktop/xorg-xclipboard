@@ -136,7 +136,7 @@ NewClip(Widget w, ClipPtr old)
     newClip = (ClipPtr) malloc (sizeof (ClipRec));
     if (!newClip)
 	return newClip;
-    newClip->clip = 0;
+    newClip->clip = NULL;
     newClip->avail = 0;
     newClip->prev = old;
     newClip->next = NULL;
@@ -431,7 +431,7 @@ EraseTextWidget(void)
 }
 
 
-XtActionsRec xclipboard_actions[] = {
+static XtActionsRec xclipboard_actions[] = {
     { "NewClip", 	NewCurrentClip }, 
     { "NextClip",	NextCurrentClip },
     { "PrevClip",	PrevCurrentClip },
@@ -489,7 +489,7 @@ InsertClipboard(Widget w, XtPointer client_data, Atom *selection,
 	XFree(value);
     }
 
-    if (convert_failed)
+    if (convert_failed) {
 	/* if UTF8_STRING failed try COMPOUND_TEXT */
 	if (target == XA_UTF8_STRING(d))
 	{
@@ -522,6 +522,7 @@ InsertClipboard(Widget w, XtPointer client_data, Atom *selection,
 	    XBell (d, 0);
 #endif
 	}
+    }
     
     XtOwnSelection(top, ClipboardAtom, CurrentTime,
 		   ConvertSelection, LoseSelection, NULL);
@@ -664,7 +665,7 @@ static ResourceData userOptions;
 
 #define Offset(field) XtOffsetOf(ResourceData, field)
 
-XtResource resources[] = {
+static XtResource resources[] = {
   {"wrap", "Wrap", XtRBoolean, sizeof(Boolean),
      Offset(wrap), XtRImmediate, (XtPointer)False}
 };
