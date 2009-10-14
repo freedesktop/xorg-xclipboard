@@ -39,7 +39,11 @@ AC_PROG_INSTALL
 XORG_DEFAULT_OPTIONS
 
 # Checks for pkg-config packages
-PKG_CHECK_MODULES(XCLIPBOARD, xaw7 xmu xt x11)
+PKG_CHECK_EXISTS([xkbfile], [XKBPKG="xkbfile"], [XKBPKG=""])
+if test x$XKBPKG = xxkbfile ; then
+    AC_DEFINE([XKB], [1], [Define to use libxkbfile calls like XKBStdBell()])
+fi
+PKG_CHECK_MODULES(XCLIPBOARD, [xaw7 xmu xt x11 ${XKBPKG}])
 AC_SUBST(XCLIPBOARD_CFLAGS)
 AC_SUBST(XCLIPBOARD_LIBS)
 
