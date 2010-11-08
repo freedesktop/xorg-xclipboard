@@ -28,6 +28,10 @@ in this Software without prior written authorization from The Open Group.
  * UTF-8 and CTEXT support: Stanislav Maslovski <stanislav.maslovski@gmail.com>
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <stdio.h>
 #include <X11/Intrinsic.h>
 #include <X11/StringDefs.h>

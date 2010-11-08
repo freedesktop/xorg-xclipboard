@@ -25,6 +25,10 @@ in this Software without prior written authorization from The Open Group.
  * Author:  Ralph Swick, DEC/Project Athena
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <X11/Intrinsic.h>
