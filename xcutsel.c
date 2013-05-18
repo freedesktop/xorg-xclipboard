@@ -86,14 +86,14 @@ static ButtonState state;
 static void
 Syntax(char *call)
 {
-    fprintf (stderr, "usage:  %s [-selection name] [-cutbuffer number]\n", 
+    fprintf (stderr, "usage:  %s [-selection name] [-cutbuffer number]\n",
 	     call);
     exit (1);
 }
 
 
-static void 
-StoreBuffer(Widget w, XtPointer client_data, Atom *selection, Atom *type, 
+static void
+StoreBuffer(Widget w, XtPointer client_data, Atom *selection, Atom *type,
 	    XtPointer value, unsigned long *length, int *format)
 {
 
@@ -108,20 +108,20 @@ StoreBuffer(Widget w, XtPointer client_data, Atom *selection, Atom *type,
 
     XStoreBuffer( XtDisplay(w), (char*)value, (int)(*length),
 		  options.buffer );
-   
+
     XtFree(value);
 }
 
 
-static Boolean 
+static Boolean
 ConvertSelection(Widget w, Atom *selection, Atom *target,
-		 Atom *type, XtPointer *value, unsigned long *length, 
+		 Atom *type, XtPointer *value, unsigned long *length,
 		 int *format)
 {
     Display* d = XtDisplay(w);
     XSelectionRequestEvent* req =
 	XtGetSelectionRequest(w, *selection, (XtRequestId)NULL);
-	
+
     if (*target == XA_TARGETS(d)) {
 	Atom* targetP;
 	Atom* std_targets;
@@ -192,7 +192,7 @@ ConvertSelection(Widget w, Atom *selection, Atom *target,
 }
 
 
-static void 
+static void
 SetButton(ButtonState *statep, Boolean on)
 {
     if (statep->is_on != on) {
@@ -209,7 +209,7 @@ SetButton(ButtonState *statep, Boolean on)
 }
 
 
-static void 
+static void
 LoseSelection(Widget w, Atom *selection)
 {
     if (options.value) {
@@ -230,7 +230,7 @@ Quit(Widget w, XtPointer closure, XtPointer callData)
 
 
 /* ARGSUSED */
-static void 
+static void
 GetSelection(Widget w, XtPointer closure, XtPointer callData)
 {
     XtGetSelectionValue(w, options.selection, XA_STRING,
@@ -240,7 +240,7 @@ GetSelection(Widget w, XtPointer closure, XtPointer callData)
 
 
 /* ARGSUSED */
-static void 
+static void
 GetBuffer(Widget w, XtPointer closure, XtPointer callData)
 {
     if (options.value) XFree( options.value );
@@ -255,7 +255,7 @@ GetBuffer(Widget w, XtPointer closure, XtPointer callData)
 }
 
 
-int 
+int
 main(int argc, char *argv[])
 {
     char *label;
@@ -309,7 +309,7 @@ main(int argc, char *argv[])
 	XtAddCallback( button, XtNcallback, GetBuffer, (XtPointer)&state );
  	state.button = button;
 	state.is_on = False;
-   
+
     XtRealizeWidget(shell);
     XtAppMainLoop(appcon);
     exit(0);
