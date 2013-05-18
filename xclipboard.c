@@ -246,7 +246,7 @@ DeleteCurrentClip(Widget w, XEvent *ev, String *parms, Cardinal *np)
 }
 
 /* ARGSUSED */
-static void
+static void _X_NORETURN
 Quit(Widget w, XEvent *ev, String *parms, Cardinal *np)
 {
     XtCloseDisplay  (XtDisplay (text));

@@ -221,7 +221,7 @@ LoseSelection(Widget w, Atom *selection)
 
 
 /* ARGSUSED */
-static void 
+static void _X_NORETURN
 Quit(Widget w, XtPointer closure, XtPointer callData)
 {
     XtCloseDisplay( XtDisplay(w) );

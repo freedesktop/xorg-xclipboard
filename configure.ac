@@ -42,7 +42,7 @@ PKG_CHECK_EXISTS([xkbfile], [XKBPKG="xkbfile"], [XKBPKG=""])
 if test x$XKBPKG = xxkbfile ; then
     AC_DEFINE([XKB], [1], [Define to use libxkbfile calls like XKBStdBell()])
 fi
-PKG_CHECK_MODULES(XCLIPBOARD, [xaw7 xmu xt >= 1.1 x11 ${XKBPKG}])
+PKG_CHECK_MODULES(XCLIPBOARD, [xaw7 xmu xt >= 1.1 x11 ${XKBPKG} xproto >= 7.0.17])
 
 PKG_CHECK_MODULES(APPDEFS, xt)
 xt_appdefaultdir=`$PKG_CONFIG --variable=appdefaultdir xt`
