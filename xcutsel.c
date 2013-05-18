@@ -193,18 +193,18 @@ ConvertSelection(Widget w, Atom *selection, Atom *target,
 
 
 static void 
-SetButton(ButtonState *state, Boolean on)
+SetButton(ButtonState *statep, Boolean on)
 {
-    if (state->is_on != on) {
+    if (statep->is_on != on) {
 	Arg args[2];
 	Pixel fg, bg;
 	XtSetArg( args[0], XtNforeground, &fg );
 	XtSetArg( args[1], XtNbackground, &bg );
-	XtGetValues( state->button, args, TWO );
+	XtGetValues( statep->button, args, TWO );
 	args[0].value = (XtArgVal)bg;
 	args[1].value = (XtArgVal)fg;
-	XtSetValues( state->button, args, TWO );
-	state->is_on = on;
+	XtSetValues( statep->button, args, TWO );
+	statep->is_on = on;
     }
 }
 
