@@ -345,9 +345,7 @@ AcceptSaveFile(Widget w, XEvent *e, String *argv, Cardinal *argc)
     {
 	if (currentClip->filename)
 	    free (currentClip->filename);
-	currentClip->filename = malloc (strlen (filename) + 1);
-	if (currentClip->filename)
-	    strcpy (currentClip->filename, filename);
+	currentClip->filename = strdup (filename);
     }
 }
 
