@@ -193,7 +193,7 @@ set_button_state (void)
     XtSetValues (prevButton, &arg, ONE);
     XtSetArg (arg, XtNsensitive, nextvalid);
     XtSetValues (nextButton, &arg, ONE);
-    sprintf (labelString, "%d", IndexCurrentClip ());
+    snprintf (labelString, sizeof(labelString), "%d", IndexCurrentClip ());
     XtSetArg (arg, XtNlabel, labelString);
     XtSetValues (indexLabel, &arg, ONE);
 }
