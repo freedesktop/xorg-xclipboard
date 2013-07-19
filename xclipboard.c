@@ -67,7 +67,7 @@ typedef struct _Clip {
     struct _Clip    *next, *prev;
     char	    *clip;
     char	    *filename;
-    int		    avail;
+    size_t	    avail;
 } ClipRec, *ClipPtr;
 
 static Atom wm_delete_window;
@@ -94,7 +94,7 @@ SaveClip(Widget w, ClipPtr clip)
 {
     Arg	    args[1];
     char    *data;
-    int	    len;
+    size_t  len;
     Widget  source;
 
     source = XawTextGetSource (w);
@@ -324,7 +324,7 @@ static void
 AcceptSaveFile(Widget w, XEvent *e, String *argv, Cardinal *argc)
 {
     char    *filename;
-    Boolean success;
+    Bool    success;
     Arg	    args[1];
 
     filename = XawDialogGetValueString (fileDialog);
